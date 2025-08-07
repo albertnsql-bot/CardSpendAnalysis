@@ -13,7 +13,7 @@ import streamlit as st
 
 # Set the path where PDFs are stored
 #output_folder = "/Users/AlbertNadar/Desktop/PdfExtracts"
-output_folder = "/PdfExtracts"
+output_folder = "PdfExtracts"
 def readpdftodf():
     all_data = []  # To collect data from all PDFs
 
