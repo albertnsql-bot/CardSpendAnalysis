@@ -276,7 +276,7 @@ with cols2[0]:
 # ----------- 4. Pie Chart - All Time -------------
 st.subheader("Spend Breakdown by Tag")
 
-cols1 = st.columns(2)
+cols1 = st.columns(([1, 1, 2]))
 tag_all = df.groupby('Tag')['Amount'].sum().reset_index()
 
 fig_pie_all = go.Figure(data=[
@@ -307,6 +307,20 @@ fig_pie_cashback = go.Figure(data=[
 fig_pie_cashback.update_layout(title_text='Cashback by Tag', height=400)
 
 cols1[1].plotly_chart(fig_pie_cashback, use_container_width=True)
+
+## for heat Map
+df['Weekday'] = df['Date'].dt.day_name()
+df['Month'] = df['Date'].dt.strftime('%b-%Y')
+
+heatmap_data = df.groupby(['Month', 'Weekday'])['Amount'].sum().reset_index()
+
+fig_heat = px.density_heatmap(
+    heatmap_data,
+    x='Weekday', y='Month', z='Amount',
+    color_continuous_scale='Blues',
+    title="Weekday vs Month Spend Heatmap"
+)
+cols1[2].plotly_chart(fig_heat, use_container_width=True)
 
 # ----------- 5. Pie Charts - Last 3 Months -------------
 st.subheader("Last 3 Months - Tag Wise Spend")
